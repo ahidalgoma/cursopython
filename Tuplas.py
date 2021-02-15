@@ -1,0 +1,12 @@
+mitupla=("Angel",1966/5/12, "Granada")
+milista=list(mitupla)
+print (mitupla[2])
+print (milista[:])
+print ("Angel" in mitupla)
+print (mitupla.count("Granada"))
+print (len(mitupla))
+nombre, fecha, ciudad=mitupla
+print (nombre)
+print (fecha)
+print (ciudad)
+print (mitupla.index("Granada"))
