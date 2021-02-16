@@ -6,8 +6,11 @@ def calcula_raiz(num):
     else:
         return math.sqrt(num)
 
-opc=int(input("introduzca un número para calcular su raiz cuadrada "))
+opc=int(input("Introduzca un número para calcular su raiz cuadrada "))
 
-print (calcula_raiz(opc))
+try:
+    print (calcula_raiz(opc))
+except ValueError as ErrorNumeroNegativo:
+    print (ErrorNumeroNegativo)
 
 print ("Fin del programa")
