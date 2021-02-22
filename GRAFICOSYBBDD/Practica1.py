@@ -43,13 +43,14 @@ def BorrarCampos():
 def crearUsuario():
     miConexion=sqlite3.connect("GestionUsuarios")
     miCursor=miConexion.cursor()    
+#    Datosusuario=NOMBRE_usuario.get(),PASSWORD_usuario.get(),APELLIDOS_usuario.get(),DIRECCION_usuario.get(),textComentario.get("1.0", END)
     try:
         miCursor.execute("INSERT INTO USUARIOS VALUES(NULL, '"+NOMBRE_usuario.get()+
             "','"+PASSWORD_usuario.get()+ 
             "','"+APELLIDOS_usuario.get()+ 
             "','"+DIRECCION_usuario.get()+
-            "','"+textComentario.get("1.0", END)+ "')")    
-    
+            "','"+textComentario.get("1.0", END)+ "')")
+#        miCursor.execute("INSERT INTO USUARIOS VALUES(NULL,?,?,?,?,?)",(Datosusuario))
         miConexion.commit()
         messagebox.showinfo("CRUD Usuarios", "Usuario creado con éxito")
     except:
@@ -61,6 +62,8 @@ def LeerUsuario():
     try:
         miCursor.execute("SELECT * FROM USUARIOS WHERE ID="+ID_usuario.get())
         registroUsuario=miCursor.fetchall()
+        if registroUsuario==[]:
+            messagebox.showwarning("Usuarios","Registro no encontrado")
         for usu in registroUsuario:
             ID_usuario.set(usu[0])
             NOMBRE_usuario.set(usu[1])
@@ -89,6 +92,19 @@ def Actualizarusuario():
     except:
         messagebox.showwarning("CRUD Usuarios", "Usuario NO pudo ser actualizado")
 
+def BorrarUsuario():
+    miConexion=sqlite3.connect("GestionUsuarios")
+    miCursor=miConexion.cursor()    
+    try:
+        miCursor.execute("DELETE FROM USUARIOS WHERE ID="+ID_usuario.get())
+        
+        miConexion.commit()
+        messagebox.showinfo("Base de datos", "Registro borrado con éxito")
+    except:
+        messagebox.showwarning("Borrar Usuario", "Usuario NO pudo ser borrado")
+
+
+
 # -------------------- Terminan las funciones ----------------------------
 
 
@@ -109,7 +125,7 @@ CRUDMenu=Menu(barraMenu, tearoff=0)
 CRUDMenu.add_command(label="Crear", command=crearUsuario)
 CRUDMenu.add_command(label="Leer", command=LeerUsuario)
 CRUDMenu.add_command(label="Actualizar", command=Actualizarusuario)
-CRUDMenu.add_command(label="Borrar")
+CRUDMenu.add_command(label="Borrar", command=BorrarUsuario)
 
 ayudaMenu=Menu(barraMenu, tearoff=0)
 ayudaMenu.add_command(label="Licencia", command=AvisoLicencia)
@@ -182,7 +198,7 @@ botonLeer.grid(row=1, column=1, sticky="e", padx=10, pady=10)
 botonModificar=Button(miFrame2, text="Update",command=Actualizarusuario)
 botonModificar.grid(row=1, column=2, sticky="e", padx=10, pady=10)
 
-botonBorrar=Button(miFrame2, text="Delete")
+botonBorrar=Button(miFrame2, text="Delete", command=BorrarUsuario)
 botonBorrar.grid(row=1, column=3, sticky="e", padx=10, pady=10)
 
 
