@@ -80,13 +80,9 @@ def Actualizarusuario():
     miConexion=sqlite3.connect("GestionUsuarios")
     miCursor=miConexion.cursor()    
     try:
-        miCursor.execute("UPDATE USUARIOS SET NOMBRE='" + NOMBRE_usuario.get() +
-            "', PASSWORD='" + PASSWORD_usuario.get() + 
-            "',APELLIDOS='" + APELLIDOS_usuario.get() + 
-            "', DIRECCION='" + DIRECCION_usuario.get() +
-            "', COMENTARIOS='" + textComentario.get("1.0", END) +
-            "'WHERE ID=" + ID_usuario.get())    
-    
+        Datosusuario=NOMBRE_usuario.get(),PASSWORD_usuario.get(),APELLIDOS_usuario.get(),DIRECCION_usuario.get(),textComentario.get("1.0", END)    
+        miCursor.execute("UPDATE USUARIOS SET NOMBRE=?, PASSWORD=?, APELLIDOS=?, DIRECCION=?, COMENTARIOS=? " + 
+        "WHERE ID="+ID_usuario.get(), (Datosusuario))    
         miConexion.commit()
         messagebox.showinfo("CRUD Usuarios", "Usuario actualizado con éxito")
     except:
